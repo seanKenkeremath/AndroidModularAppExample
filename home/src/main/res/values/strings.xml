@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">home</string>
+    <string name="action_settings">Settings</string>
+    <string name="home_message_not_signed_in">You are not signed in.</string>
+    <string name="home_message_signed_in">You are signed in.</string>
+
+</resources>

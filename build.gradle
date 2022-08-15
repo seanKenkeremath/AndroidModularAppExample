@@ -1,0 +1,24 @@
+buildscript {
+    //Kotlin version + Hilt version must be compatible
+    ext.kotlin_version = '1.7.0'
+    ext.hilt_version = '2.42'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
