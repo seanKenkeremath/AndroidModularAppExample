@@ -4,7 +4,7 @@
 
     <application
         android:supportsRtl="true"
-        android:theme="@style/Theme.ModularAppExample">
+        android:theme="@style/Theme.Common">
         <activity
             android:name=".login.ui.LoginActivity"
             android:exported="true"
