@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="sean.k.account" >
+
+    <application
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Common" >
+        <activity
+            android:label="@string/account_title"
+            android:name=".AccountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Common.NoActionBar" />
+    </application>
+
+</manifest>

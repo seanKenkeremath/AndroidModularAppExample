@@ -16,3 +16,4 @@ rootProject.name = "ModularAppExample"
 include ':app'
 include ':home'
 include ':common'
+include ':account'

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_title">My Account</string>
+    <string name="account_greeting_format">Hello, %s</string>
+    <string name="account_greeting_not_logged_in">Welcome! To view your account, please log in.</string>
+    <string name="account_email">Account Email Address: testtest@fake.com</string>
+    <string name="account_last_login_format">Last Login: %s</string>
+    <string name="account_login_button">Log In</string>
+    <string name="account_logout_button">Log Out</string>
+</resources>

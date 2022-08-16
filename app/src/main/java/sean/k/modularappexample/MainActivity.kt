@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import sean.k.account.AccountActivity
 import sean.k.home.HomeActivity
 import sean.k.common.login.ui.LoginActivity
 import sean.k.modularappexample.databinding.ActivityMainBinding
@@ -23,7 +24,9 @@ class MainActivity : AppCompatActivity() {
         binding.home.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
-
+        binding.account.setOnClickListener {
+            startActivity(Intent(this, AccountActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

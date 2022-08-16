@@ -8,23 +8,35 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import sean.k.common.date.Clock
 import sean.k.login.data.LoginApi
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 interface LoginRepository {
     val username: String?
     val sessionToken: String?
+    val lastLoginTime: Long?
+
+    val lastLoginDateFormatted: String?
+        get() = lastLoginTime?.let { dateFormat.format(Date(it)) }
 
     val isLoggedIn: Boolean
         get() = sessionToken != null
+
     fun isLoggedInObservable(): Flow<Boolean>
 
     fun logout()
 
     fun login(username: String, password: String): Flow<Boolean>
+
+    companion object {
+        private val dateFormat = SimpleDateFormat.getDateTimeInstance()
+    }
 }
 
-class LoginRepositoryImpl(context: Context, private val api: LoginApi):
+class LoginRepositoryImpl(context: Context, private val api: LoginApi, private val clock: Clock) :
     LoginRepository {
 
     private val datastore = Datastore(context)
@@ -32,6 +44,14 @@ class LoginRepositoryImpl(context: Context, private val api: LoginApi):
         get() = datastore.username
     override val sessionToken: String?
         get() = datastore.sessionToken
+    override val lastLoginTime: Long?
+        get() = datastore.loginDateTimestamp.let {
+            if (it == 0L) {
+                null
+            } else {
+                it
+            }
+        }
 
     /** Must be updated whenever login state changes. **/
     private val _isLoggedInObservable: MutableStateFlow<Boolean> = MutableStateFlow(isLoggedIn)
@@ -43,6 +63,7 @@ class LoginRepositoryImpl(context: Context, private val api: LoginApi):
     override fun logout() {
         datastore.sessionToken = null
         datastore.username = null
+        datastore.loginDateTimestamp = 0L
         _isLoggedInObservable.value = false
     }
 
@@ -56,6 +77,7 @@ class LoginRepositoryImpl(context: Context, private val api: LoginApi):
                 is Result.Success -> {
                     datastore.username = result.data.userName
                     datastore.sessionToken = result.data.sessionToken
+                    datastore.loginDateTimestamp = clock.currentTimeMillis
                     _isLoggedInObservable.value = true
                     emit(true)
                 }
@@ -74,6 +96,7 @@ class LoginRepositoryImpl(context: Context, private val api: LoginApi):
 
             private const val KEY_USERNAME = "key_username"
             private const val KEY_SESSION_TOKEN = "key_session_token"
+            private const val KEY_LOGIN_TIME = "key_login_time"
         }
 
         private val prefs: SharedPreferences = context.getSharedPreferences(
@@ -92,5 +115,9 @@ class LoginRepositoryImpl(context: Context, private val api: LoginApi):
         var username: String?
             get() = prefs.getString(KEY_USERNAME, null)
             set(value) = getEditor().putString(KEY_USERNAME, value).apply()
+
+        var loginDateTimestamp: Long
+            get() = prefs.getLong(KEY_LOGIN_TIME, 0)
+            set(value) = getEditor().putLong(KEY_LOGIN_TIME, value).apply()
     }
 }
