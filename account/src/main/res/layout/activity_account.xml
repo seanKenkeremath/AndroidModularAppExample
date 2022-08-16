@@ -52,14 +52,6 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:text="@string/account_login_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <Button
-        android:id="@+id/log_out"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="@string/account_logout_button"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

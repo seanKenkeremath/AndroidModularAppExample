@@ -24,12 +24,6 @@ class AccountActivity: AppCompatActivity() {
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.logOut.setOnClickListener {
-            loginRepository.logout()
-        }
-        binding.login.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
@@ -40,14 +34,19 @@ class AccountActivity: AppCompatActivity() {
                 binding.lastLogin.text = getString(R.string.account_last_login_format, loginRepository.lastLoginDateFormatted)
                 binding.email.visibility = View.VISIBLE
                 binding.lastLogin.visibility = View.VISIBLE
-                binding.login.visibility = View.GONE
-                binding.logOut.visibility = View.VISIBLE
+                binding.login.text = getString(R.string.account_logout_button)
+                binding.login.setOnClickListener {
+                    loginRepository.logout()
+                }
             } else {
                 binding.greeting.text = getString(R.string.account_greeting_not_logged_in)
                 binding.email.visibility = View.GONE
                 binding.lastLogin.visibility = View.GONE
                 binding.login.visibility = View.VISIBLE
-                binding.logOut.visibility = View.GONE
+                binding.login.text = getString(R.string.account_login_button)
+                binding.login.setOnClickListener {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
         }
     }
