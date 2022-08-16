@@ -30,7 +30,6 @@ class AccountActivity: AppCompatActivity() {
         binding.login.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
-        
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
