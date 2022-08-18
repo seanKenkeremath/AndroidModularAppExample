@@ -49,6 +49,8 @@ This codebase contains 4 separate modules:
 
 The relationship between the modules flows in one direction. This is important to avoid cyclical dependencies.
 
+![Dependency Diagram](images/dependency_diagram.png)
+
 In a scenario where multiple apps exist that would like to reuse these shared modules, another top level module would be created akin to our `app` module.
 Note that this top-level module could be its own codebase entirely (bringing published modules in as external dependencies) or another top level module of this single codebase.
 
